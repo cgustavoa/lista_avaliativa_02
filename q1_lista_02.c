@@ -7,6 +7,12 @@ int main() {
     
     for(int i = 0; i < tamanho; i++){
         scanf("%d", &conjunto[i]);
+
+        if(i < tamanho -1){
+            printf("%d ", conjunto[i]);
+        } else {
+            printf("%d", conjunto[i]);
+        }
     }
 
     printf("\n");
@@ -19,8 +25,11 @@ int main() {
         }
 
         for(int i = 0; i < tamanho -1; i++){
+            if(i < tamanho -2){
+            printf("%d ", novoConjunto[i]);
+        } else {
             printf("%d", novoConjunto[i]);
-            
+        }
         }
         printf("\n");
 
