@@ -1,72 +1,57 @@
 #include <stdio.h>
-#include <string.h>
-// PERGUNTAR PARA O PROFFESSOR
 
-struct Jogador{
-    char nome[31];
-    char posicao;
-    int forca;
-};
-
-float calcularForca(struct Jogador jogadores[11]){
-    int G = 0, L = 0, Z = 0, V = 0, M = 0, A = 0;
-    for(int i = 0; i < 11; i++){
-        switch(jogadores[i].posicao){
-            case 'G':
-                G += jogadores[i].forca;
-                break;
-            case 'L':
-                L += jogadores[i].forca;
-                break;
-            case 'Z':
-                Z += jogadores[i].forca;
-                break;
-            case 'V':
-                V += jogadores[i].forca;
-                break;
-            case 'M':
-                M += jogadores[i].forca;
-                break;
-            case 'A':
-                A += jogadores[i].forca;
-                break;
-            default:
-                break;
-        }
-    }
-    return(8 * G + 10 * L + 5 * Z + 8 * V + 11 * M + 12 * A) / 100.0;
+float calcularForca(int forcas[]){
+    return(8 * forcas[0] + 10 * (forcas[1] + forcas[2]) + 5 * (forcas[3] + forcas[4]) + 8 * (forcas[5] + forcas[6]) + 11 * (forcas[7] + forcas[8]) + 12 * (forcas[9] + forcas[10])) / 100.0;
 }
 
 int main(){
-    struct Jogador time1[11], time2[11];
+   
+    int forcasTime1[11] = {0}, forcasTime2[11] = {0};
     char nomeTime1[31], nomeTime2[31];
+    char nomeJogador[31], posicaoJogador;
+    int forcaJogador;
 
-    printf("Digite o nome do primeiro time: ");
     scanf("%30[^\n]", nomeTime1);
 
     for(int i = 0; i < 11; i++){
-        printf("Digite o nome, posição e força do jogador %d do primeiro time (separados por ponto e vírgula): ", i + 1);
-        scanf("%30[^;];%c;%d", time1[i].nome, &time1[i].posicao, &time1[i].forca);
+        scanf("%30[^;];%c;%d", nomeJogador, &posicaoJogador, &forcaJogador);
+
+        int posicao = (posicaoJogador == 'L') ? (forcasTime1[1] == 0) ? 1 : 2 : 
+        (posicaoJogador == 'Z') ? (forcasTime1[3] == 0) ? 3 : 4 : 
+        (posicaoJogador == 'V') ? (forcasTime1[5] == 0) ? 5 : 6 : 
+        (posicaoJogador == 'M') ? (forcasTime1[7] == 0) ? 7 : 8 : 
+        (posicaoJogador == 'A') ? (forcasTime1[9] == 0) ? 9 : 10 : 0;
+
+        if(forcasTime1[posicao] == 0)
+            forcasTime1[posicao] = forcaJogador;
     }
 
-    printf("Digite o nome do segundo time: ");
-    scanf("%30[^\n]", nomeTime2);
+    scanf(" %30[^\n]", nomeTime2);
 
     for(int i = 0; i < 11; i++){
-        printf("Digite o nome, posição e força do jogador %d do segundo time (separados por ponto e vírgula): ", i + 1);
-        scanf(" %30[^;];%c;%d", time2[i].nome, &time2[i].posicao, &time2[i].forca);
+        scanf(" %30[^;]; %c; %d", nomeJogador, &posicaoJogador, &forcaJogador);
+
+        int posicao = (posicaoJogador == 'L') ? (forcasTime2[1] == 0) ? 1 : 2 : 
+        (posicaoJogador == 'Z') ? (forcasTime2[3] == 0) ? 3 : 4 : 
+        (posicaoJogador == 'V') ? (forcasTime2[5] == 0) ? 5 : 6 : 
+        (posicaoJogador == 'M') ? (forcasTime2[7] == 0) ? 7 : 8 : 
+        (posicaoJogador == 'A') ? (forcasTime2[9] == 0) ? 9 : 10 : 0;
+
+        if(forcasTime2[posicao] == 0)
+            forcasTime2[posicao] = forcaJogador;
     }
 
-    float forcaTime1 = calcularForca(time1);
-    float forcaTime2 = calcularForca(time2);
+    float forcaTime1 = calcularForca(forcasTime1);
+    float forcaTime2 = calcularForca(forcasTime2);
 
-    if(forcaTime1 > forcaTime2){
-        printf("%s eh mais forte %.2f\n", nomeTime1, forcaTime1);
-    } else if(forcaTime2 > forcaTime1){
-        printf("%s eh mais forte %.2f\n", nomeTime2, forcaTime2);
-    } else{
-        printf("Os times têm forças iguais com força ponderada %.2f\n", forcaTime1);
-    }
+    printf("%s: %.2f de forca\n%s: %.2f de forca\n", nomeTime1, forcaTime1, nomeTime2, forcaTime2);
+
+    if(forcaTime1 > forcaTime2)
+        printf("%s eh mais forte\n", nomeTime1);
+    else if(forcaTime2 > forcaTime1)
+        printf("%s eh mais forte\n", nomeTime2);
+    else
+        printf("Os times tem a mesma forca\n");
 
     return 0;
 }
