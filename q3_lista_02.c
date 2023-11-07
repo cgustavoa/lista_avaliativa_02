@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    int matrizA[4][4], matrizB[4][4], matrizResultante[4][4];     //declaração da matriz e das variaveis
+    int matrizA[4][4], matrizB[4][4], matrizResultante[4][4];     
     int i, j, k;                                        
     char operacao[5];
 
